@@ -10,10 +10,21 @@ python = "^3.10"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "9.0.2"
+black = "^26.10.1"
 
 [build-system]
 requires = ["poetry-core>=2.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
-testpaths = ["."]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-s"
+log_cli = true
+log_cli_level = "INFO"
+log_cli_format = "%(asctime)s [%(levelname)s] %(message)s"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
+
+[tool.black]
+line-length = 79
+target-version = ['py310']
