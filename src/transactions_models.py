@@ -10,6 +10,14 @@ class Currency(str, Enum):
     USD = "USD"
     EURO = "EURO"
 
+    @property
+    def symbol(self) -> str:
+        # This is to save the symbols in the enum
+        # so that we can use to the summary report to indicate
+        # the correct currency symbol.
+        symbols = {"GBP": "£", "USD": "$", "EURO": "€"}
+        return symbols.get(self.value, "")
+
 
 @dataclass
 class Transaction:
@@ -21,10 +29,10 @@ class Transaction:
     currency_code: Currency
     category: str | None
     date: datetime | str
-    # @field_validator("create_timestamp", "update_timestamp", mode="before")
-    # @classmethod
 
     def __post_init__(self):
+        # Validate all the variable, making sure the variable is
+        # passed in with the correct type
         if isinstance(self.id, str):
             try:
                 self.id = UUID(self.id)

@@ -116,7 +116,7 @@ def test_invalid_transaction_item(
             created_at=create_timestamp,
             updated_at=updated_timestamp,
             description=description,
-            amount=int_amount,
+            amount=Decimal(str(int_amount)),
             currency_code=currency,
             category=category_str,
             date=date,
