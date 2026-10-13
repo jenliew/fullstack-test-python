@@ -3,8 +3,7 @@ from decimal import Decimal
 
 import pytest
 
-from calculator import Currency
-from main import Calculator
+from calculator import Currency, Calculator
 from transactions_models import Transaction
 
 

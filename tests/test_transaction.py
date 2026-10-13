@@ -4,8 +4,7 @@ from decimal import Decimal
 
 import pytest
 
-from main import Transaction
-from transactions_models import Currency
+from transactions_models import Currency, Transaction
 
 
 @pytest.mark.parametrize(
