@@ -20,24 +20,22 @@ class Calculator:
         grouped: defaultdict[str, list[Transaction]] = defaultdict(list)
 
         for tx in transactions:
-            currency = (tx.currency_code or "").strip().upper() or "UNKNOWN"
-            if tx.category:
-                tx.category.lower()
+            currency = (
+                tx.currency_code.value.strip().upper()
+                if isinstance(tx.currency_code, Currency)
+                else str(tx.currency_code or "").strip().upper()
+            ) or "UNKNOWN"
             grouped[currency].append(tx)
 
         return dict(grouped)
 
     @staticmethod
     def _category(transaction: Transaction) -> str:
-        return (
-            transaction.category.strip().lower()
-            if transaction.category and transaction.category.strip()
-            else "others"
-        )
+        category = (transaction.category or "").strip()
+        return category.lower() if category else "others"
 
     @staticmethod
-    def amount_formater(amount: Decimal, symbol_str: str) -> str:
-        # Construct the summary of the transaction
+    def amount_formatter(amount: Decimal, symbol_str: str) -> str:
         return f"{'-' if amount < 0 else ''}{symbol_str}{abs(amount):,.2f}"
 
     @staticmethod
@@ -58,7 +56,7 @@ class Calculator:
                 tx_word = "transaction" if count == 1 else "transactions"
 
                 lines.append(
-                    f"{Calculator.amount_formater(total, symbol)}, {count} {tx_word}"
+                    f"{Calculator.amount_formatter(total, symbol)}, {count} {tx_word}"
                 )
                 continue
 
@@ -69,7 +67,7 @@ class Calculator:
                 tx_word = "transaction" if count == 1 else "transactions"
 
                 lines.append(
-                    f"{name}: {Calculator.amount_formater(total, symbol)}, {count} {tx_word}"
+                    f"{name}: {Calculator.amount_formatter(total, symbol)}, {count} {tx_word}"
                 )
 
         return "\n".join(lines)

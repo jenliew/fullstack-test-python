@@ -32,3 +32,10 @@ With Poetry:
 - Run `poetry install` to install dependencies
 - Run `poetry run pytest` to run the tests
 
+To setup virtual environment with poetry and pyenv:
+
+- cd fullstack-test-python 
+- pyenv install <python version> #e.g: pyenv install 3.13.7
+- poetry config --local virtualenvs.in-project true #to setup the virtual in the project instead of home directory
+- poetry env use <python version> #e.g: pyenv env use 3.13.7
+- source .venv/bin/activate #The virtual environment should be setup in the project
